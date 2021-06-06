@@ -1,4 +1,9 @@
-//*spm12*/*
+spm12-r7771*
+scripts/spm12-r7771/**
 *data*/
 *.mat
 ds*/
+*.pdf
+*.ps
+*.patch
+*.tex
