@@ -19,7 +19,7 @@ function matlabbatch = load_batch(bnr, sdata)
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.uflags.fwhm = 10;
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.uflags.pad = 0;
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.uflags.ws = 1;
-    matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.mflags.template = {'C:\Users\maudo\Documents\Projects\OpenNeuro\spm12-r7771\toolbox\FieldMap\T1.nii'};
+    matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.mflags.template = {[sdata.root_dir, 'spm12-r7771\toolbox\FieldMap\T1.nii']};
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.mflags.fwhm = 5;
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.mflags.nerode = 2;
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.mflags.ndilate = 4;
@@ -30,7 +30,6 @@ function matlabbatch = load_batch(bnr, sdata)
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.writeunwarped = 0;
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.anat = '';
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.matchanat = 0;
-  
   
   %% Load batch for VDM application
   elseif bnr == 2
