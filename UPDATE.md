@@ -16,8 +16,11 @@
 - Tuesday: I found out that the subject-specific template used in the study is also available via another file-download platform.
 - Wednesday: I downloaded the supplementary information from the article to get a better understanding of the preprocessing steps found in the paper and the code.
 - Thursday: I focussed on the paper, supplementary material and github code to reconstruct all steps in the preprocessing pipeline, and to ensure that I understand each step fully.
-- Friday:git rm
 
 *************************************************
 
 _I contemplate the main goal of this project. Is it a more selfish, educational project for me to understand another study's pipeline and walk through it step by step tutorial-style? Or is it somehow supposed to have a verification element involving my own views on how to conduct neuroimaging research? This last option seems a bit arrogant considering my personal experience (limited) with doing fmri analysis, as well as the lack of expertise around me in contrast to published studies. Therefore, I need to rethink my attitude towards the code I find on github, as more a guideline then a comparison to my own ideas._
+
+*************************************************
+
+- Friday: Repo cleanup and UPDATE updated.
