@@ -15,6 +15,8 @@
 - Monday: I started off finishing the install of freesurfer and fmriprep-docker in order to eventually run fmriprep as a comparison to familiar spm tools. This took a considerable amount of time with wsl issues and trying to script part of the freesurfer setup in python. I ended up modifying my .bashrc to simplify things. I also spent some time deciphering the article and code of the author to understand the full pipeline (this takes quite a lot of time throughout the whole process so far).
 - Tuesday: I found out that the subject-specific template used in the study is also available via another file-download platform.
 - Wednesday: I downloaded the supplementary information from the article to get a better understanding of the preprocessing steps found in the paper and the code.
+- Thursday: I focussed on the paper, supplementary material and github code to reconstruct all steps in the preprocessing pipeline, and to ensure that I understand each step fully.
+- Friday:git rm
 
 *************************************************
 
