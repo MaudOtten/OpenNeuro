@@ -1,9 +1,12 @@
 spm12-r7771*
 scripts/spm12-r7771/**
 *data*/
+*output*/
 *.mat
 ds*/
 *.pdf
 *.ps
 *.patch
 *.tex
+*.txt
+*workspace*

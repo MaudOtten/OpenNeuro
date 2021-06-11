@@ -12,11 +12,11 @@ for i = 1:5
   sdata.ses_dir = [sdata.data_dir, sdata.sub, sdata.ses];
   
   matlabbatch = load_batch(1, sdata);
-  save(["calc_VDM_", sdata.ses ,".mat"], "matlabbatch");
+  save(["job_files/calc_VDM_", sdata.ses ,".mat"], "matlabbatch");
   spm_jobman("run", matlabbatch)
   
   matlabbatch = load_batch(2, sdata);
-  save(["app_VDM_", sdata.ses ,".mat"], "matlabbatch");
+  save(["job_files/app_VDM_", sdata.ses ,".mat"], "matlabbatch");
   spm_jobman("run", matlabbatch)
 endfor
 
