@@ -23,4 +23,4 @@ _I contemplate the main goal of this project. Is it a more selfish, educational 
 
 *************************************************
 
-- Friday: Repo cleanup and UPDATE updated.
+- Friday: Repo cleanup and README & UPDATE updated.
