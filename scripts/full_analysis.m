@@ -1,26 +1,42 @@
+clc
+clear all
+
+cd('../')
+cwd = pwd
+
 # Load spm
-#run install_spm.m
+install_spm
 
-# Run VDM calc on each session
-sdata.root_dir = "C:/Users/maudo/Documents/Projects/OpenNeuro/"
-sdata.data_dir = [sdata.root_dir, "ds-spm/"];
-sdata.sub = "sub-01/";
+spm('defaults', 'FMRI');
+spm_get_defaults('cmdline',true);
 
+% Set path variables
+sdata.root_dir = cwd; % "C:/Users/maudo/Documents/Projects/OpenNeuro/"
+sdata.data_dir = [sdata.root_dir, "\\ds-spm\\"];
+sdata.sub = "sub-01\\";
 
-for i = 1:5
+% To save batches (job_files/*.mat), set to 1
+sdata.save_mlb = true;
+
+% Check nr of sessions in data directory
+[~, sessions] = spm_select('FPList', [sdata.data_dir, sdata.sub], 'dummy.xxx');
+
+% go to script dir
+cd([cwd, '\\scripts'])
+
+% Perform preprocessing
+for i = 1:size(sessions)(1)
   sdata.ses = sprintf("ses-%02d", i);
   sdata.ses_dir = [sdata.data_dir, sdata.sub, sdata.ses];
   
-  matlabbatch = load_batch(1, sdata);
-  save(["job_files/calc_VDM_", sdata.ses ,".mat"], "matlabbatch");
-  spm_jobman("run", matlabbatch)
+  % calculate VDM, realign and unwarp EPI
+  %realign_unwarp(sdata);
   
-  matlabbatch = load_batch(2, sdata);
-  save(["job_files/app_VDM_", sdata.ses ,".mat"], "matlabbatch");
-  spm_jobman("run", matlabbatch)
+  % segment T1w scan, skull-strip data based on segmentation
+  %segment_strip(sdata);
+
 endfor
 
 
-# Perform preprocessing
 
-# Analysis
+% Analysis

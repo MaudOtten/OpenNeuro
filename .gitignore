@@ -1,12 +1,23 @@
+# SPM software files
 spm12-r7771*
 scripts/spm12-r7771/**
+*.patch
+
+
+# Data from OpenNeuro
 *data*/
 *output*/
-*.mat
 ds*/
+
+
+# Output from SPM / Octave
+*.mat
 *.pdf
 *.ps
-*.patch
 *.tex
 *.txt
+
+
+# VScode files
+.vscode/*
 *workspace*

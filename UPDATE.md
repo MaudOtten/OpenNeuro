@@ -10,7 +10,7 @@
 - Saturday: I finished setting up the repo. I aso wrote these updates for the week.
 
 
-### Week 2 (07-06-2021 / 14-06-2021)
+### Week 2 (07-06-2021 / 13-06-2021)
 
 - Monday: I started off finishing the install of freesurfer and fmriprep-docker in order to eventually run fmriprep as a comparison to familiar spm tools. This took a considerable amount of time with wsl issues and trying to script part of the freesurfer setup in python. I ended up modifying my .bashrc to simplify things. I also spent some time deciphering the article and code of the author to understand the full pipeline (this takes quite a lot of time throughout the whole process so far).
 - Tuesday: I found out that the subject-specific template used in the study is also available via another file-download platform.
@@ -24,3 +24,10 @@ _I contemplate the main goal of this project. Is it a more selfish, educational 
 *************************************************
 
 - Friday: Repo cleanup and README & UPDATE updated.
+- Sunday: Presentation to Selina Veng (@sveng) on open-source (neuro)science and the project, and a brainstorm about the scope and form.
+
+
+### Week 1 (14-06-2021 / 20-06-2021)
+
+- Wednesday: Today I realized that the elusive 'hires' scan I was looking for in the original code referred to high-resolution structural. The more you know... Now the segmentation setup is a lot more straight forward to set up. I completed the unwarping and segmentation parts of the preprocessing pipeline, running it successfully on a subset of the data.
+- Thursday: 

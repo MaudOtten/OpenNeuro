@@ -16,4 +16,4 @@ system ("make PLATFORM=octave install");
 addpath (fullfile (cwd, "spm12-r7771"));
 cd (cwd);
 %% Start SPM12
-spm fmri
+%spm fmri
