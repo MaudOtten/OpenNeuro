@@ -2,7 +2,8 @@ function matlabbatch = estimate_noise(sdata)
   spm_jobman('initcfg');
   matlabbatch = {};
 
-  anat_fp = [sdata.ses_dir, '/anat']
+  anat_fp = fullfile(sdata.ses_dir, 'anat')
+  func_fp = fullfile(sdata.ses_dir, 'func')
   
   wm_seg = spm_select('FPList', anat_fp, '^c2s.*nii$');
   csf_seg = spm_select('FPList', anat_fp, '^c3s.*nii$');
@@ -18,19 +19,23 @@ function matlabbatch = estimate_noise(sdata)
   matlabbatch{1}.spm.util.imcalc.options.interp = 0;
   matlabbatch{1}.spm.util.imcalc.options.dtype  = 4;
   
+  if sdata.save_mlb == true
+    save(fullfile(sdata.root_dir, "scripts", "job_files", ["estimatenoise_", sdata.ses ,".mat"]), "matlabbatch");
+  endif
+  
   spm_jobman('run',matlabbatch);
 
   
   
-  meanEPI       = spm_vol(['../data.functional.mean/' spm_select('FPList', '../data.functional.mean', '^meanuf.*nii$')]);
-  noiseMask     = spm_vol([pwd '/noisemask.nii']);
+  meanEPI = spm_vol(spm_select('FPList', func_fp, '^meanu.*nii$'));
+  noiseMask = spm_vol(fullfile(anat_fp, 'noisemask.nii'));
   resliceParams = struct('mean', false, 'interp', 0, 'which', 1, 'prefix', 'r');
   spm_reslice([meanEPI noiseMask], resliceParams);
 
-  cd('../data.functional.rest');
+  cd(func_fp);
 
-  rest4D = load_nii([pwd '/ufrest4D.nii.gz']);
-  mask3D = load_nii('../data.anatomical.mask/rnoisemask.nii');
+  rest4D = load_untouch_nii(spm_select('FPList', func_fp, '^u.*nii$'));
+  mask3D = load_untouch_nii(fullfile(anat_fp, 'rnoisemask.nii'));
 
   [x,y,z,t] = size(rest4D.img);
   rest2D    = reshape(rest4D.img, x*y*z, t);

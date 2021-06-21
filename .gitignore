@@ -1,7 +1,9 @@
-# SPM software files
+# software files
 spm12-r7771*
 scripts/spm12-r7771/**
 *.patch
+scripts/third_party/**
+*.zip
 
 
 # Data from OpenNeuro

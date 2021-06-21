@@ -15,7 +15,7 @@ function matlabbatch = coregister(bnr, sdata)
   matlabbatch{1}.spm.spatial.coreg.estwrite.roptions.prefix = 'r';
 
   if sdata.save_mlb == 1
-    save(["job_files/coregister_", sdata.ses ,".mat"], "matlabbatch");
+    save(fullfile("job_files", ["coregister_", sdata.ses ,".mat"]), "matlabbatch");
   endif
   
   % run batch

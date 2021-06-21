@@ -2,7 +2,7 @@ function matlabbatch = segment_strip(sdata)
   spm_jobman('initcfg');
   matlabbatch = {};
   
-  anat_fp = [sdata.ses_dir, '/anat']
+  anat_fp = fullfile(sdata.ses_dir, 'anat')
   
   %% Load batch for segmentation
   matlabbatch{1}.spm.spatial.preproc.channel.vols = cellstr(spm_select('FPList', anat_fp, '^s.*T1w.nii$'));
@@ -45,7 +45,7 @@ function matlabbatch = segment_strip(sdata)
   matlabbatch{1}.spm.spatial.preproc.warp.write   = [1 1];
   
   if sdata.save_mlb == 1
-    save(["job_files/segment_", sdata.ses ,".mat"], "matlabbatch");
+    save(fullfile("job_files", ["segment_", sdata.ses ,".mat"]), "matlabbatch");
   endif
   
   % run batch
@@ -73,7 +73,7 @@ function matlabbatch = segment_strip(sdata)
   matlabbatch{1}.spm.util.imcalc.options.dtype  = 4;
   
   if sdata.save_mlb == 1
-    save(["job_files/strip_", sdata.ses ,".mat"], "matlabbatch");
+    save(fullfile("job_files", ["strip_", sdata.ses ,".mat"]), "matlabbatch");
   endif
   
   % run batch

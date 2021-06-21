@@ -4,11 +4,11 @@ function matlabbatch = realign_unwarp(sdata)
   
   %% Load batch for VDM calculation
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.data.presubphasemag.phase = ...
-    {[sdata.ses_dir, "\\fmap\\", sdata.sub(1:6), '_', sdata.ses, "_phasediff.nii,1"]};
+    {fullfile(sdata.ses_dir, "fmap", [sdata.sub(1:6), '_', sdata.ses, "_phasediff.nii,1"])};
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.data.presubphasemag.magnitude = ...
-    {[sdata.ses_dir, "\\fmap\\", sdata.sub(1:6), '_', sdata.ses,  "_magnitude1.nii,1"]};
+    {fullfile(sdata.ses_dir, "fmap", [sdata.sub(1:6), '_', sdata.ses,  "_magnitude1.nii,1"])};
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.session.epi = ...
-    {[sdata.ses_dir, "\\func\\", sdata.sub(1:6), '_', sdata.ses, "_task-rest_bold.nii,1"]};
+    {fullfile(sdata.ses_dir, "func", [sdata.sub(1:6), '_', sdata.ses, "_task-rest_bold.nii,1"])};
   
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.et = [4.92 7.38];
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.maskbrain = 1;
@@ -34,7 +34,7 @@ function matlabbatch = realign_unwarp(sdata)
   
   # save batch (adjust bool in full_analysis.m)
   if sdata.save_mlb == true
-    save(["job_files\\calcVDM_", sdata.ses ,".mat"], "matlabbatch");
+    save(fullfile("job_files", ["calcVDM_", sdata.ses ,".mat"]), "matlabbatch");
   
   % run batch
   spm_jobman("run", matlabbatch)
@@ -44,10 +44,10 @@ function matlabbatch = realign_unwarp(sdata)
   
   %% Load batch for realignment and VDM unwarp
   matlabbatch{1}.spm.spatial.realignunwarp.data(1).scans = ...
-    cellstr(spm_select('ExtFPList',[sdata.ses_dir, "\\func\\"],"^sub.*task-rest.*",Inf));
+    cellstr(spm_select('ExtFPList',fullfile(sdata.ses_dir, "func"),"^sub.*task-rest.*",Inf));
   
   matlabbatch{1}.spm.spatial.realignunwarp.data(1).pmscan = ...
-    cellstr(spm_select('FPList', [sdata.ses_dir, '\\fmap\\'], '^vdm.*nii$'))
+    cellstr(spm_select('FPList', fullfile(sdata.ses_dir, 'fmap'), '^vdm.*nii$'))
   
   % All further parameters are taken directly from original paper of Pritschet (2020):
   % https://github.com/tsantander/PritschetSantander2020_NI_Hormones
@@ -78,7 +78,7 @@ function matlabbatch = realign_unwarp(sdata)
   matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix  = 'u';
 
   if sdata.save_mlb == 1
-    save(["job_files\\realignunwarp_", sdata.ses ,".mat"], "matlabbatch");
+    save(fullfile("job_files", ["realignunwarp_", sdata.ses ,".mat"]), "matlabbatch");
   endif
   
   % run batch
