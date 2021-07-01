@@ -1,11 +1,11 @@
-function matlabbatch = segment_strip(sdata)
+function sdata = segment_strip(sdata)
   spm_jobman('initcfg');
   matlabbatch = {};
   
-  anat_fp = fullfile(sdata.ses_dir, 'anat')
+  sdata.anat_fp = fullfile(sdata.ses_dir, 'anat');
   
   %% Load batch for segmentation
-  matlabbatch{1}.spm.spatial.preproc.channel.vols = cellstr(spm_select('FPList', anat_fp, '^s.*T1w.nii$'));
+  matlabbatch{1}.spm.spatial.preproc.channel.vols = cellstr(spm_select('FPList', sdata.anat_fp, '^s.*T1w.nii$'));
 
   matlabbatch{1}.spm.spatial.preproc.channel.biasreg  = 0.001;
   matlabbatch{1}.spm.spatial.preproc.channel.biasfwhm = 60;
@@ -44,27 +44,29 @@ function matlabbatch = segment_strip(sdata)
   matlabbatch{1}.spm.spatial.preproc.warp.samp    = 3;
   matlabbatch{1}.spm.spatial.preproc.warp.write   = [1 1];
   
-  if sdata.save_mlb == 1
+  if sdata.save_mlb == true
     save(fullfile("job_files", ["segment_", sdata.ses ,".mat"]), "matlabbatch");
   endif
   
   % run batch
-  spm_jobman("run", matlabbatch)
+  if sdata.run == true
+    spm_jobman('run',matlabbatch);
+  endif
   
   
   matlabbatch = {};
 
   %% Load batch for skull stripping
-  gm = cellstr(spm_select('FPList', anat_fp, '^c1s.*T1w.nii$'))
-  wm = cellstr(spm_select('FPList', anat_fp, '^c2s.*T1w.nii$'))
-  csf = cellstr(spm_select('FPList', anat_fp, '^c3s.*T1w.nii$'))
+  gm = cellstr(spm_select('FPList', sdata.anat_fp, '^c1s.*T1w.nii$'));
+  wm = cellstr(spm_select('FPList', sdata.anat_fp, '^c2s.*T1w.nii$'));
+  csf = cellstr(spm_select('FPList', sdata.anat_fp, '^c3s.*T1w.nii$'));
   
-  bcorr = cellstr(spm_select('FPList', anat_fp, '^ms.*T1w.nii$'))
+  bcorr = cellstr(spm_select('FPList', sdata.anat_fp, '^ms.*T1w.nii$'));
   [~,fn,~] = fileparts(char(bcorr));
   
   matlabbatch{1}.spm.util.imcalc.input          = cellstr([gm; wm; csf; bcorr]);
 
-  matlabbatch{1}.spm.util.imcalc.output         = [anat_fp, '/ss-', fn, '.nii'];
+  matlabbatch{1}.spm.util.imcalc.output         = [sdata.anat_fp, '/ss-', fn, '.nii'];
   matlabbatch{1}.spm.util.imcalc.expression     = '(i1 + i2 + i3) .* i4';
 
   matlabbatch{1}.spm.util.imcalc.options.dmtx   = 0;
@@ -72,11 +74,13 @@ function matlabbatch = segment_strip(sdata)
   matlabbatch{1}.spm.util.imcalc.options.interp = 1;
   matlabbatch{1}.spm.util.imcalc.options.dtype  = 4;
   
-  if sdata.save_mlb == 1
+  if sdata.save_mlb == true
     save(fullfile("job_files", ["strip_", sdata.ses ,".mat"]), "matlabbatch");
   endif
   
   % run batch
-  spm_jobman("run", matlabbatch)
+  if sdata.run == true
+    spm_jobman('run',matlabbatch);
+  endif
 
 endfunction

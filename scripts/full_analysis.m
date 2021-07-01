@@ -1,7 +1,8 @@
-#root_dir =  "C:/Users/maudo/Documents/Projects/OpenNeuro/";
-root_dir = "/mnt/c/Users/maudo/Documents/Projects/OpenNeuro/";
+root_dir =  "C:/Users/maudo/Documents/Projects/OpenNeuro/";
+#root_dir = "/mnt/c/Users/maudo/Documents/Projects/OpenNeuro/";
 cd(root_dir);
 cwd = pwd;
+
 
 # Load spm
 install_spm;
@@ -16,6 +17,7 @@ sdata.sub = "sub-01";
 
 % To save batches (job_files/*.mat), set to 1
 sdata.save_mlb = true;
+sdata.run = true;
 
 % Check nr of sessions in data directory
 [~, sessions] = spm_select('FPList', fullfile(sdata.data_dir, sdata.sub), 'dummy.xxx');
@@ -25,18 +27,21 @@ cd(fullfile(cwd, 'scripts'));
 addpath(genpath(fullfile(root_dir, 'scripts', 'third_party')));
 
 % Perform preprocessing
-for i = 1:size(sessions)(1)
+for i = 1:size(sessions)
   sdata.ses = sprintf("ses-%02d", i);
   sdata.ses_dir = fullfile(sdata.data_dir, sdata.sub, sdata.ses);
-  sdata
+  
   % calculate VDM, realign and unwarp EPI
-  %realign_unwarp(sdata);
+  sdata = realign_unwarp(sdata);
   
   % segment T1w scan, skull-strip data based on segmentation
-  %segment_strip(sdata);
+  sdata = segment_strip(sdata);
   
   % estimate anatomical noise, normalize EPI
-  estimate_noise(sdata);
+  sdata = estimate_noise(sdata);
+  
+  % coregister T1w segmentation and EPI to subject-specific template
+  sdata = coregister(sdata);
 
 endfor
 

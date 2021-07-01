@@ -27,8 +27,12 @@ _I contemplate the main goal of this project. Is it a more selfish, educational 
 - Sunday: Presentation to Selina Veng (@sveng) on open-source (neuro)science and the project, and a brainstorm about the scope and form.
 
 
-### Week 1 (14-06-2021 / 20-06-2021)
+### Week 3 (14-06-2021 / 20-06-2021)
 
 - Wednesday: Today I realized that the elusive 'hires' scan I was looking for in the original code referred to high-resolution structural. The more you know... Now the segmentation setup is a lot more straight forward to set up. I completed the unwarping and segmentation parts of the preprocessing pipeline, running it successfully on a subset of the data.
 - Thursday: I had a lot of trouble with a Matlab package used in the original code to load Nifti images and headers, which wasn't compatible with Octave. I found an Octave-compatible package, but this didn't seem able to handle 4D images. A few packages further, I managed to load the images. However, some warnings did show, possibly indicating something went wrong in previous preprocessing steps..
 - Friday: Total overhaul with software. Octave was acting out, making me un- and reinstall.
+- Sat/Sun: I have been talking more about the project, realizing I could involve more people, potentially contacting new people to ask them about their ideas regarding open science. I don't know what I don't know, and there definitely is a whole community out there pushing for the availability of tools, but also for changing the ecosystem of publishing to make science better.
+
+### Week 4 (28-06-2021 / 04-07-2021)
+

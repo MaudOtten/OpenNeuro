@@ -1,4 +1,4 @@
-function matlabbatch = realign_unwarp(sdata)
+function sdata = realign_unwarp(sdata)
   spm_jobman('initcfg');
   matlabbatch = {};
   
@@ -13,7 +13,7 @@ function matlabbatch = realign_unwarp(sdata)
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.et = [4.92 7.38];
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.maskbrain = 1;
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.blipdir = 1;
-  matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.tert = 0.0597409;
+  matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.tert = 1/16.578*1000;
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.epifm = 0;
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.ajm = 0;
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.defaults.defaultsval.uflags.method = 'Mark3D';
@@ -29,15 +29,18 @@ function matlabbatch = realign_unwarp(sdata)
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.matchvdm = 1;
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.sessname = 'VDM';
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.writeunwarped = 0;
-  matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.anat = '';
+  matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.anat = spm_select('FPList', fullfile(sdata.ses_dir, "anat"), '^s.*T1w.nii$');
   matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.matchanat = 0;
   
   # save batch (adjust bool in full_analysis.m)
   if sdata.save_mlb == true
     save(fullfile("job_files", ["calcVDM_", sdata.ses ,".mat"]), "matlabbatch");
-  
+  endif
+
   % run batch
-  spm_jobman("run", matlabbatch)
+  if sdata.run == true
+    spm_jobman('run',matlabbatch);
+  endif
 
   
   matlabbatch = {};
@@ -77,11 +80,13 @@ function matlabbatch = realign_unwarp(sdata)
   matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask    = 1;
   matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix  = 'u';
 
-  if sdata.save_mlb == 1
+  if sdata.save_mlb == true
     save(fullfile("job_files", ["realignunwarp_", sdata.ses ,".mat"]), "matlabbatch");
   endif
   
   % run batch
-  spm_jobman("run", matlabbatch)
+  if sdata.run == true
+    spm_jobman('run',matlabbatch);
+  endif
 
 endfunction
