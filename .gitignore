@@ -11,6 +11,8 @@ scripts/third_party/**
 *output*/
 ds*/
 
+# Code from paper
+*original*.m
 
 # Output from SPM / Octave
 *.mat
